@@ -7,4 +7,9 @@ public interface IEmpleadoRepository
 {
     Task<IEnumerable<Empleado>> GetAllAsync();
     Task<Empleado> GetByIdAsync(int id);
+
+    Task InsertarAsync(Empleado empleado);
+    Task ActualizarAsync(Empleado empleado);
+    Task<Empleado?> ObtenerPorIdAsync(int id);
+    Task<bool> DniExisteAsync(string dni, int? excluirId = null);
 }

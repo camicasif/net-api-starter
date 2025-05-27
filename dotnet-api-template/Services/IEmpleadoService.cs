@@ -8,4 +8,7 @@ public interface IEmpleadoService
 {
     Task<IEnumerable<EmpleadoDto>> ObtenerTodosAsync();
     Task<EmpleadoDto> ObtenerPorIdAsync(int id);
+
+    Task<ResponseDto<EmpleadoDto>> CrearOActualizarEmpleadoAsync(EmpleadoDto dto);
+
 }

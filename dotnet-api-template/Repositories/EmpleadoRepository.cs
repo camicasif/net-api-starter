@@ -16,8 +16,37 @@ public class EmpleadoRepository : IEmpleadoRepository
     }
 
     public async Task<IEnumerable<Empleado>> GetAllAsync() =>
-        await _context.Empleados.ToListAsync();
+            await _context.Empleados
+                .Where(e => !e.Deleted)
+                .ToListAsync();
 
-    public async Task<Empleado> GetByIdAsync(int id) =>
-        await _context.Empleados.FindAsync(id);
+    public async Task<Empleado?> GetByIdAsync(int id) =>
+        await _context.Empleados
+            .FirstOrDefaultAsync(e => e.Id == id && !e.Deleted);
+
+    public async Task<Empleado?> ObtenerPorIdAsync(int id) =>
+        await _context.Empleados
+            .FirstOrDefaultAsync(e => e.Id == id && !e.Deleted);
+
+    public async Task InsertarAsync(Empleado empleado)
+    {
+        _context.Empleados.Add(empleado);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task ActualizarAsync(Empleado empleado)
+    {
+        _context.Empleados.Update(empleado);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<bool> DniExisteAsync(string dni, int? excluirId = null)
+    {
+        return await _context.Empleados
+            .AnyAsync(e =>
+                e.Dni == dni &&
+                !e.Deleted &&
+                (!excluirId.HasValue || e.Id != excluirId.Value)
+            );
+    }
 }

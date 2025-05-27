@@ -10,23 +10,33 @@ namespace dotnet_api_template.Controllers;
 [Route("api/[controller]")]
 public class EmpleadoController : ControllerBase
 {
-    private readonly IEmpleadoService _service;
+    private readonly IEmpleadoService _empleadoService;
 
-    public EmpleadoController(IEmpleadoService service)
+    public EmpleadoController(IEmpleadoService empleadoService)
     {
-        _service = service;
+        _empleadoService = empleadoService;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<EmpleadoDto>>> Get()
+
+
+    [HttpPost]
+    public async Task<IActionResult> CrearOActualizarEmpleado([FromBody] EmpleadoDto dto)
     {
-        return Ok(await _service.ObtenerTodosAsync());
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var resultado = await _empleadoService.CrearOActualizarEmpleadoAsync(dto);
+
+        if (!resultado.EsExitoso)
+            return BadRequest(resultado.Mensaje);
+
+        return Ok(resultado.Data);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<EmpleadoDto>> Get(int id)
     {
-        var empleado = await _service.ObtenerPorIdAsync(id);
+        var empleado = await _empleadoService.ObtenerPorIdAsync(id);
         if (empleado == null) return NotFound();
         return Ok(empleado);
     }
