@@ -1,4 +1,5 @@
 using dotnet_api_template.Data;
+using dotnet_api_template.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,6 +15,5 @@ public interface IEmpleadoRepository
     Task<bool> DniExisteAsync(string dni, int? excluirId = null);
 
     Task EliminarLogicamenteAsync(int id);
-
-
+    Task<IEnumerable<Empleado>> GetEmpleadosPaginadosAsync(int pagina, int tamanioPagina);
 }

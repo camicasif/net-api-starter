@@ -20,6 +20,15 @@ public class EmpleadoRepository : IEmpleadoRepository
                 .Where(e => !e.Deleted)
                 .ToListAsync();
 
+    public async Task<IEnumerable<Empleado>> GetEmpleadosPaginadosAsync(int pagina, int tamanioPagina)
+    {
+        return await _context.Empleados
+            .Where(e => !e.Deleted)
+            .Skip((pagina - 1) * tamanioPagina)
+            .Take(tamanioPagina)
+            .ToListAsync();
+    }
+
     public async Task<Empleado?> GetByIdAsync(int id) =>
         await _context.Empleados
             .FirstOrDefaultAsync(e => e.Id == id && !e.Deleted);

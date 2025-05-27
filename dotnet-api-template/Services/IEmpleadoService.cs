@@ -11,4 +11,7 @@ public interface IEmpleadoService
 
     Task<ResponseDto<EmpleadoDto>> CrearOActualizarEmpleadoAsync(EmpleadoDto dto);
     Task<ResponseDto<string>> EliminarEmpleadoAsync(int id);
+
+    Task<IEnumerable<EmpleadoDto>> ListarEmpleadosPaginadosAsync(int pagina, int tamanioPagina);
+
 }

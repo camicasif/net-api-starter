@@ -53,4 +53,15 @@ public class EmpleadoController : ControllerBase
 
         return Ok(resultado);
     }
+
+
+    [HttpGet("listado")]
+    public async Task<IActionResult> ListarEmpleados([FromQuery] int pagina = 1)
+    {
+        const int tamanioPagina = 10;
+
+        var empleados = await _empleadoService.ListarEmpleadosPaginadosAsync(pagina, tamanioPagina);
+
+        return Ok(empleados);
+    }
 }
