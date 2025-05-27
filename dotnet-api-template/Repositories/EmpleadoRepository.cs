@@ -49,4 +49,15 @@ public class EmpleadoRepository : IEmpleadoRepository
                 (!excluirId.HasValue || e.Id != excluirId.Value)
             );
     }
+
+    public async Task EliminarLogicamenteAsync(int id)
+    {
+        var empleado = await _context.Empleados.FirstOrDefaultAsync(e => e.Id == id && !e.Deleted);
+
+        if (empleado == null)
+            throw new KeyNotFoundException("El empleado no existe o ya fue eliminado.");
+
+        empleado.Deleted = true;
+        await _context.SaveChangesAsync();
+    }
 }

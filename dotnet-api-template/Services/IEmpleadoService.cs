@@ -10,5 +10,5 @@ public interface IEmpleadoService
     Task<EmpleadoDto> ObtenerPorIdAsync(int id);
 
     Task<ResponseDto<EmpleadoDto>> CrearOActualizarEmpleadoAsync(EmpleadoDto dto);
-
+    Task<ResponseDto<string>> EliminarEmpleadoAsync(int id);
 }

@@ -40,4 +40,17 @@ public class EmpleadoController : ControllerBase
         if (empleado == null) return NotFound();
         return Ok(empleado);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> EliminarEmpleado(int id)
+    {
+        var resultado = await _empleadoService.EliminarEmpleadoAsync(id);
+
+        if (!resultado.EsExitoso)
+        {
+            return NotFound(resultado.Mensaje);
+        }
+
+        return Ok(resultado);
+    }
 }

@@ -12,4 +12,8 @@ public interface IEmpleadoRepository
     Task ActualizarAsync(Empleado empleado);
     Task<Empleado?> ObtenerPorIdAsync(int id);
     Task<bool> DniExisteAsync(string dni, int? excluirId = null);
+
+    Task EliminarLogicamenteAsync(int id);
+
+
 }

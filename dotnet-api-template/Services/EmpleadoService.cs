@@ -91,4 +91,20 @@ public class EmpleadoService : IEmpleadoService
             return ResponseDto<EmpleadoDto>.Success(dto);
         }
     }
+
+
+    public async Task<ResponseDto<string>> EliminarEmpleadoAsync(int id)
+    {
+        try
+        {
+            await _repo.EliminarLogicamenteAsync(id);
+            return ResponseDto<string>.Success("Empleado eliminado correctamente.");
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return ResponseDto<string>.Fail(ex.Message);
+        }
+    }
+
+
 }
