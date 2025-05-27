@@ -24,6 +24,7 @@ public class EmpleadoRepository : IEmpleadoRepository
         await _context.Empleados
             .FirstOrDefaultAsync(e => e.Id == id && !e.Deleted);
 
+
     public async Task<Empleado?> ObtenerPorIdAsync(int id) =>
         await _context.Empleados
             .FirstOrDefaultAsync(e => e.Id == id && !e.Deleted);

@@ -36,7 +36,7 @@ public class EmpleadoController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<EmpleadoDto>> Get(int id)
     {
-        var empleado = await _empleadoService.ObtenerPorIdAsync(id);
+        var empleado = await _empleadoService.ObtenerEmpleadoPorIdAsync(id);
         if (empleado == null) return NotFound();
         return Ok(empleado);
     }

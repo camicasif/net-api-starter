@@ -26,15 +26,28 @@ public class EmpleadoService : IEmpleadoService
         });
     }
 
-    public async Task<EmpleadoDto> ObtenerPorIdAsync(int id)
+
+    public async Task<ResponseDto<EmpleadoDto>> ObtenerEmpleadoPorIdAsync(int id)
     {
-        var e = await _repo.GetByIdAsync(id);
-        return new EmpleadoDto
+        var empleado = await _repo.ObtenerPorIdAsync(id);
+
+        if (empleado == null || empleado.Deleted)
+            return ResponseDto<EmpleadoDto>.Fail("El empleado no existe.");
+
+        var dto = new EmpleadoDto
         {
-            Nombre = $"{e.Nombre} {e.Apellido}",
-            Sueldo = e.Sueldo
+            Id = empleado.Id,
+            Nombre = empleado.Nombre,
+            Apellido = empleado.Apellido,
+            FechaNacimiento = empleado.FechaNacimiento,
+            Dni = empleado.Dni,
+            Sueldo = empleado.Sueldo,
+            TieneSeguroPrivado = empleado.TieneSeguroPrivado
         };
+
+        return ResponseDto<EmpleadoDto>.Success(dto);
     }
+
 
 
     public async Task<ResponseDto<EmpleadoDto>> CrearOActualizarEmpleadoAsync(EmpleadoDto dto)
