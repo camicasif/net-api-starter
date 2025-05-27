@@ -70,4 +70,24 @@ public class EmpleadoRepository : IEmpleadoRepository
         empleado.Deleted = true;
         await _context.SaveChangesAsync();
     }
+
+    public async Task<IEnumerable<Empleado>> FiltrarPorNombreApellidoAsync(string nombre, string apellido, int pagina, int tamanioPagina)
+    {
+        var query = _context.Empleados.AsQueryable();
+
+        query = query.Where(e => !e.Deleted);
+
+        if (!string.IsNullOrEmpty(nombre))
+            query = query.Where(e => e.Nombre.Contains(nombre));
+
+        if (!string.IsNullOrEmpty(apellido))
+            query = query.Where(e => e.Apellido.Contains(apellido));
+
+        query = query
+            .Skip((pagina - 1) * tamanioPagina)
+            .Take(tamanioPagina);
+
+        return await query.ToListAsync();
+    }
+
 }

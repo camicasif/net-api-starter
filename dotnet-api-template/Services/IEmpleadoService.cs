@@ -14,4 +14,7 @@ public interface IEmpleadoService
 
     Task<IEnumerable<EmpleadoDto>> ListarEmpleadosPaginadosAsync(int pagina, int tamanioPagina);
 
+    Task<IEnumerable<EmpleadoDto>> FiltrarEmpleadosAsync(string nombre, string apellido, int pagina, int tamanioPagina);
+
+
 }

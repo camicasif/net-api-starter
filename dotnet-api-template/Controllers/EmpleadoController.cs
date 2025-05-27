@@ -64,4 +64,15 @@ public class EmpleadoController : ControllerBase
 
         return Ok(empleados);
     }
+
+    [HttpGet("filtrar")]
+    public async Task<IActionResult> FiltrarEmpleados(
+    [FromQuery] string nombre = null,
+    [FromQuery] string apellido = null,
+    [FromQuery] int pagina = 1)
+    {
+        int tamanioPagina = 10;
+        var empleados = await _empleadoService.FiltrarEmpleadosAsync(nombre, apellido, pagina, tamanioPagina);
+        return Ok(empleados);
+    }
 }

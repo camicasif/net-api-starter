@@ -135,5 +135,21 @@ public class EmpleadoService : IEmpleadoService
         });
     }
 
+    public async Task<IEnumerable<EmpleadoDto>> FiltrarEmpleadosAsync(string nombre, string apellido, int pagina, int tamanioPagina)
+    {
+        var empleados = await _repo.FiltrarPorNombreApellidoAsync(nombre, apellido, pagina, tamanioPagina);
+
+        return empleados.Select(e => new EmpleadoDto
+        {
+            Id = e.Id,
+            Nombre = e.Nombre,
+            Apellido = e.Apellido,
+            FechaNacimiento = e.FechaNacimiento,
+            Dni = e.Dni,
+            Sueldo = e.Sueldo,
+            TieneSeguroPrivado = e.TieneSeguroPrivado
+        });
+    }
+
 
 }

@@ -16,4 +16,7 @@ public interface IEmpleadoRepository
 
     Task EliminarLogicamenteAsync(int id);
     Task<IEnumerable<Empleado>> GetEmpleadosPaginadosAsync(int pagina, int tamanioPagina);
+
+    Task<IEnumerable<Empleado>> FiltrarPorNombreApellidoAsync(string nombre, string apellido, int pagina, int tamanioPagina);
+
 }
